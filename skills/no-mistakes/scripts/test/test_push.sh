@@ -37,7 +37,7 @@ git -C "$clone3" commit -q --amend -m "feat: a (rewritten)"
 git -C "$clone3" push -q --force origin feature
 assert_fail bash -c "cd '$wt3' && bash '$NM_SH' push feature '$remote3'"
 
-# New branch: empty remote_sha -> plain push creates it.
+# New branch: empty remote_sha -> lease push with empty expectation creates it.
 repo4="$(mk_repo)"; mk_origin "$repo4"
 git -C "$repo4" checkout -q -b brandnew
 echo n > "$repo4/n.txt"; git -C "$repo4" add -A; git -C "$repo4" commit -qm "feat: n"
@@ -45,3 +45,15 @@ base4="$(git -C "$repo4" rev-parse HEAD)"
 wt4="$(cd "$repo4" && bash "$NM_SH" worktree-add "$base4")"
 assert_ok bash -c "cd '$wt4' && bash '$NM_SH' push brandnew ''"
 assert_eq "$(git -C "$repo4" rev-parse origin/brandnew)" "$base4" "new branch pushed"
+
+# New branch whose ref appeared on origin out of band -> empty-expect lease refuses.
+repo5="$(mk_repo)"; mk_origin "$repo5"
+git -C "$repo5" checkout -q -b sniped
+echo s > "$repo5/s.txt"; git -C "$repo5" add -A; git -C "$repo5" commit -qm "feat: s"
+base5="$(git -C "$repo5" rev-parse HEAD)"
+wt5="$(cd "$repo5" && bash "$NM_SH" worktree-add "$base5")"
+clone5="$(mk_clone "$repo5")"
+git -C "$clone5" checkout -q -b sniped
+echo other > "$clone5/o.txt"; git -C "$clone5" add -A; git -C "$clone5" commit -qm "feat: other"
+git -C "$clone5" push -q origin sniped
+assert_fail bash -c "cd '$wt5' && bash '$NM_SH' push sniped ''"

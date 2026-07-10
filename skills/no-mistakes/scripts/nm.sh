@@ -141,11 +141,10 @@ nm_drift_check() {
 
 nm_push() {
   local branch="$1" remote="${2:-}"
-  if [ -z "$remote" ]; then
-    git push origin "HEAD:refs/heads/$branch"
-  else
-    git push --force-with-lease="refs/heads/$branch:$remote" origin "HEAD:refs/heads/$branch"
-  fi
+  # Always lease-guarded: an empty expectation means the remote ref must not
+  # exist yet, so even first-time branch creation is protected against a ref
+  # that appeared between drift-check and this push.
+  git push --force-with-lease="refs/heads/$branch:$remote" origin "HEAD:refs/heads/$branch"
 }
 
 nm_pr_existing() {
