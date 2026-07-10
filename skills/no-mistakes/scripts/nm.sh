@@ -9,7 +9,7 @@ nm_usage() {
   cat >&2 <<'EOF'
 usage: nm.sh <subcommand> [args]
 subcommands:
-  preflight <branch>                         check repo/branch/clean-tree/gh/auth
+  preflight <branch>                         check repo/branch/clean-tree/gh/python3/auth
   config <repo_root>                         print resolved test/lint/format/reviewer
   default-branch                             print the default branch name (origin/HEAD)
   diff-range                                 print "<merge-base>..HEAD"
@@ -66,6 +66,8 @@ nm_preflight() {
   fi
   command -v gh >/dev/null 2>&1 || {
     echo "error: gh not installed; see https://cli.github.com" >&2; return 1; }
+  command -v python3 >/dev/null 2>&1 || {
+    echo "error: python3 not installed; nm.sh uses it to read config, validate findings, and parse gh JSON output" >&2; return 1; }
   # Check auth for the origin remote's host specifically, not every configured
   # host. A stray unauthenticated entry (e.g. an enterprise host) makes a bare
   # `gh auth status` exit non-zero, which must not fail the gate for a repo

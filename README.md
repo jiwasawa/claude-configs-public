@@ -46,7 +46,8 @@ Anything real it replaces is moved to `~/.claude-configs-backup/<timestamp>/`, n
 It is idempotent; re-run it after a `git pull` that adds or removes skills.
 
 Prefer picking cherries?
-Every skill and command is self-contained: copy `skills/<name>/` or `claude/commands/<name>.md` into your own `~/.claude` and it works.
+Each skill is self-contained: copy `skills/<name>/` into your own `~/.claude/skills/` and it works.
+Commands are single files under `claude/commands/`, but the workflow ones chain into each other and into the skills (`/work-issue` and `/triage-issues` gate with `no-mistakes` and hand off to `/merge-pr`), so install that set together; `/codex-review` and `/check-tmux` stand alone.
 
 ## Per-repo configuration
 

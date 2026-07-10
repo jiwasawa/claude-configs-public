@@ -17,7 +17,7 @@ For gating committed code into a PR, `/no-mistakes` already runs a dual Claude+C
 
 ## Invocation
 
-- Non-interactive: `codex exec "<review prompt>"` from the repo root, with sandbox disabled on the Bash call.
+- Non-interactive: `codex exec -s read-only "<review prompt>" </dev/null` from the repo root. The read-only sandbox enforces the reviewer-only invariant, and the stdin redirect keeps `codex exec` from hanging while it waits for additional input.
 - Put the artifact reference in the prompt: file paths for specs/plans/docs, or the commit range for code.
 - Known pitfall: `--uncommitted` cannot be combined with a `[PROMPT]` argument (seen in codex-cli 0.142.0). Do not use the flag; instead say in the prompt to run `git diff` / `git diff --cached` itself, or paste the diff.
 

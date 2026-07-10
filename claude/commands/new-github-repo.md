@@ -14,7 +14,8 @@ Host facts:
 
 ## Steps
 
-1. `git init` if not already a repo; create a sensible `.gitignore` for the project type if missing.
+1. `git init -b main` if not already a repo; create a sensible `.gitignore` for the project type if missing.
+   If the directory is already a repo whose default branch is not `main`, rename it first: `git branch -m <old> main`.
 2. Ensure the repo's `CLAUDE.md` contains the workflow conventions below: create the file with them if it does not exist, or append them if the file exists without them (skip any line already present).
 
    ```markdown

@@ -39,6 +39,15 @@ echo a > "$repo/a.txt"; git -C "$repo" add -A; git -C "$repo" commit -qm "feat: 
   assert_eq "$rc" "1" "missing gh fails"
   assert_contains "$out" "not installed" "explains missing-gh error" )
 
+# python3 not installed -> error (PATH has git, bash, gh but no python3).
+( gitbin="$(command -v git)"; bashbin="$(command -v bash)"
+  pdir="$(nm_tmpd)"; ln -s "$gitbin" "$pdir/git"; ln -s "$bashbin" "$pdir/bash"
+  printf '#!/usr/bin/env bash\nexit 0\n' > "$pdir/gh"; chmod +x "$pdir/gh"
+  PATH="$pdir"
+  out="$(cd "$repo" && bash "$NM_SH" preflight feature 2>&1)"; rc=$?
+  assert_eq "$rc" "1" "missing python3 fails"
+  assert_contains "$out" "python3" "explains missing-python3 error" )
+
 # Auth is checked for the origin remote's host specifically, so a stray
 # unauthenticated host (e.g. an enterprise instance) does not fail the gate.
 ( orig_url="$(git -C "$repo" remote get-url origin)"
