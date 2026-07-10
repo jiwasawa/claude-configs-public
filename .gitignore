@@ -1,0 +1,34 @@
+# Secrets and credentials
+*.key
+*.pem
+.env
+.env.*
+*_token
+*.secret
+credentials*.json
+token.json
+.netrc
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Logs and temp
+*.log
+tmp/
+*.tmp
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Machine-local Claude Code permission grants for this repo
+.claude/settings.local.json
