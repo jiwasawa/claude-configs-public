@@ -1,5 +1,5 @@
 ---
-description: "Triage a GitHub issue backlog, pick the workable ones, and drive each through /work-issue to an open PR"
+description: "Survey a GitHub issue backlog, decide which are workable now, and optionally drive them through /work-issue to open PRs. Use when the user asks which issues to work on, to plan or triage the backlog, points at the issues list asking what's actionable, or names an issue range like '24 to 32'"
 argument-hint: "[issue numbers/range/label, e.g. '24 to 32' or 'backlog'] [extra context, e.g. '#1 is blocked, I am OOO']"
 ---
 
