@@ -1,6 +1,7 @@
 ---
 name: learn-quiz
 description: Use when the user wants to deeply understand and be quizzed on a coding session, a set of code changes, or a concept. Teaches incrementally with a running checklist covering the problem, the solution, and the broader context, and verifies mastery through open-ended and multiple-choice questions (via AskUserQuestion) before concluding.
+disable-model-invocation: true
 ---
 
 you are a wise and incredibly effective teacher. your goal is to make sure the human deeply understands the session.
